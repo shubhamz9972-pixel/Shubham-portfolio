@@ -6,6 +6,7 @@ import { ServicesSection } from './sections/ServicesSection';
 import { ProjectsSection } from './sections/ProjectsSection';
 import { ContactSection } from './sections/ContactSection';
 import { ChatBot } from './components/ChatBot';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export const App: React.FC = () => {
   return (
@@ -30,6 +31,9 @@ export const App: React.FC = () => {
 
       {/* AI Chatbot Floating Widget */}
       <ChatBot />
+
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
     </main>
   );
 };
