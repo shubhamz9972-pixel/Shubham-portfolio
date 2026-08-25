@@ -15,7 +15,10 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
-  '.mp4': 'video/mp4'
+  '.mp4': 'video/mp4',
+  '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  '.pdf': 'application/pdf',
+  '.ico': 'image/x-icon'
 };
 
 const server = createServer(async (req, res) => {
@@ -43,6 +46,23 @@ const server = createServer(async (req, res) => {
     res.writeHead(404, { 'Content-Type': 'text/plain', 'Cache-Control': 'no-store' });
     res.end('Not Found');
   }
+});
+
+server.on('error', (err) => {
+  console.error('Server error:', err);
+});
+
+server.on('clientError', (err, socket) => {
+  if (err.code === 'ECONNRESET' || !socket.writable) return;
+  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection:', reason);
 });
 
 const PORT = Number(process.env.PORT) || 8123;
